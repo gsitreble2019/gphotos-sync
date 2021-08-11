@@ -176,8 +176,8 @@ class GooglePhotosIndex(object):
                     log.warning(f"Listed {total_listed} items ...\033[F")
                 if not row:
                     self.files_indexed += 1
-                    log.info(
-                        "Indexed %d %s", self.files_indexed, media_item.relative_path
+                    log.debug(
+                        "%s", media_item.filename
                     )
                     self.write_media_index(media_item, False)
                     if self.files_indexed % 2000 == 0:
