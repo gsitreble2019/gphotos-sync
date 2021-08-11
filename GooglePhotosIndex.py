@@ -114,7 +114,7 @@ class GooglePhotosIndex(object):
             )
         if not start_date and not end_date and do_video and not favourites:
             # no search criteria so do a list of the entire library
-            log.debug("mediaItems.list ...")
+            #log.debug("mediaItems.list ...")
             return self._api.mediaItems.list.execute(
                 pageToken=page_token, pageSize=self.PAGE_SIZE
             ).json()
@@ -173,7 +173,8 @@ class GooglePhotosIndex(object):
                 media_item.duplicate_number = num
 
                 if self.settings.progress and total_listed % 10 == 0:
-                    log.warning(f"Listed {total_listed} items ...\033[F")
+                    dummy_param = 0
+                    #log.warning(f"Listed {total_listed} items ...\033[F")
                 if not row:
                     self.files_indexed += 1
                     log.debug(
@@ -186,23 +187,13 @@ class GooglePhotosIndex(object):
                     self.files_indexed += 1
                     # todo at present there is no modify date in the API
                     #  so updates cannot be monitored - this won't get called
-                    log.info(
-                        "Updated Index %d %s",
-                        self.files_indexed,
-                        media_item.relative_path,
-                    )
                     self.write_media_index(media_item, True)
                 else:
                     self.files_index_skipped += 1
-                    log.debug(
-                        "Skipped Index (already indexed) %d %s",
-                        self.files_index_skipped,
-                        media_item.relative_path,
-                    )
                     self.latest_download = max(
                         self.latest_download, media_item.create_date
                     )
-            log.debug(
+            log.critical(
                 "search_media parsed %d media_items with %d PAGE_SIZE",
                 items_count,
                 GooglePhotosIndex.PAGE_SIZE,
