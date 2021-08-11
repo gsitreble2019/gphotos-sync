@@ -193,11 +193,6 @@ class GooglePhotosIndex(object):
                     self.latest_download = max(
                         self.latest_download, media_item.create_date
                     )
-            log.critical(
-                "search_media parsed %d media_items with %d PAGE_SIZE",
-                items_count,
-                GooglePhotosIndex.PAGE_SIZE,
-            )
 
             next_page = items_json.get("nextPageToken")
             if next_page:
